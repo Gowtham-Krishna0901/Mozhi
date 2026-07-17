@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Mozhi — Family Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div class="page-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">M</div>
+        <div class="brand-name" style="font-size:1.4rem;">Mozhi</div>
+      </div>
+      <button id="logout-btn" class="logout-link" type="button">Log Out</button>
+    </div>
+
+    <h1 class="page-title"><span id="greeting-text">Hello</span></h1>
+    <p class="small-note mt-8" style="margin-bottom: 20px;">Here's how your patient is doing.</p>
+
+    <div class="card">
+      <h2 class="card-title">Patient Overview</h2>
+      <div id="overview-card-body">
+        <div class="overview-row">
+          <span class="overview-label">💬 Last communication</span>
+          <span class="overview-value" id="last-communication">Loading…</span>
+        </div>
+        <div class="overview-row">
+          <span class="overview-label">🕒 Last active</span>
+          <span class="overview-value" id="last-active">Loading…</span>
+        </div>
+        <div class="overview-row">
+          <span class="overview-label">🚨 Recent alerts</span>
+          <span class="overview-value" id="recent-alerts">Loading…</span>
+        </div>
+      </div>
+    </div>
+
+    <button id="categories-btn" class="btn btn-primary mt-16" type="button">
+      🗂️ Communication Categories
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/family.js"></script>
+</body>
+</html>
