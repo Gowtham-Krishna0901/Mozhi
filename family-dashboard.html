@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Mozhi — Family Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell family-home">
+    <div class="page-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">M</div>
+        <div class="brand-name" style="font-size:1.4rem;">Mozhi</div>
+      </div>
+      <button id="logout-btn" class="logout-link" type="button">Log Out</button>
+    </div>
+
+    <div class="greeting-block">
+      <span class="greeting-wave" aria-hidden="true">👨‍👩‍👧</span>
+      <h1 class="page-title greeting-title"><span id="greeting-text">Hello</span></h1>
+      <p class="small-note greeting-subtitle">Here's how your patient is doing.</p>
+    </div>
+
+    <div class="card overview-card">
+      <h2 class="card-title">
+        <span class="card-title-icon" aria-hidden="true">💙</span>
+        Patient Overview
+      </h2>
+      <div id="overview-card-body">
+        <div class="overview-row">
+          <span class="overview-label"><span class="overview-icon overview-icon-blue" aria-hidden="true">💬</span>Last communication</span>
+          <span class="overview-value" id="last-communication">Loading…</span>
+        </div>
+        <div class="overview-row">
+          <span class="overview-label"><span class="overview-icon overview-icon-purple" aria-hidden="true">🕒</span>Last active</span>
+          <span class="overview-value" id="last-active">Loading…</span>
+        </div>
+        <div class="overview-row">
+          <span class="overview-label"><span class="overview-icon overview-icon-red" aria-hidden="true">🚨</span>Recent alerts</span>
+          <span class="overview-value" id="recent-alerts">Loading…</span>
+        </div>
+      </div>
+    </div>
+
+    <button id="categories-btn" class="categories-hero-btn mt-16" type="button">
+      <span class="categories-hero-icon" aria-hidden="true">🗂️</span>
+      <span class="categories-hero-text">
+        <span class="categories-hero-title">Communication Categories</span>
+        <span class="categories-hero-subtitle">Manage phrases and categories</span>
+      </span>
+      <span class="categories-hero-arrow" aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/family.js"></script>
+</body>
+</html>
