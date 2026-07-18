@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Mozhi — Log In</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+
+  <div class="login-bg-blob blob-a" aria-hidden="true"></div>
+  <div class="login-bg-blob blob-b" aria-hidden="true"></div>
+
+  <div class="center-shell">
+    <div style="width:100%; max-width: 460px;">
+
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">M</div>
+        <div class="brand-name">Mozhi</div>
+      </div>
+      <p class="brand-tagline" data-i18n="brand_tagline">Sign in to start talking</p>
+
+      <div class="card login-glass-card">
+
+        <p class="login-section-label" data-i18n="signing_in_as">I'm signing in as</p>
+
+        <!-- Role select (still .login-tab / data-tab so auth.js works unchanged) -->
+        <div class="login-tabs role-select" role="tablist" aria-label="Login type">
+          <button type="button" class="login-tab role-card active" data-tab="patient-panel" role="tab" aria-selected="true">
+            <span class="role-icon role-icon-blue" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="role-title" data-i18n="role_patient_title">Patient</span>
+            <span class="role-subtitle" data-i18n="role_patient_sub">Stays signed in 7 days</span>
+          </button>
+
+          <button type="button" class="login-tab role-card" data-tab="family-panel" role="tab" aria-selected="false">
+            <span class="role-icon role-icon-green" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="8.5" cy="8" r="3" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="9" r="2.4" stroke="currentColor" stroke-width="2"/><path d="M3 20c0-2.8 2.5-5 5.5-5S14 17.2 14 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M15 20c0-1.9 1.6-3.5 3.7-3.5S22 18.1 22 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="role-title" data-i18n="role_family_title">Family member</span>
+            <span class="role-subtitle" data-i18n="role_family_sub">Stays signed in 24 hours</span>
+          </button>
+        </div>
+
+        <!-- Patient panel -->
+        <div class="login-panel active" id="patient-panel" role="tabpanel">
+          <form id="patient-form" novalidate>
+            <div class="field">
+              <label for="patient-email" data-i18n="label_email">Email</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <input id="patient-email" type="email" autocomplete="email" placeholder="name@family.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="patient-password" data-i18n="label_password">Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="patient-password" type="password" autocomplete="current-password" placeholder="Enter your password" data-i18n-placeholder="placeholder_password" required />
+                <button type="button" class="password-toggle" data-toggle-for="patient-password" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="form-message" role="status"></p>
+            <button type="submit" class="btn btn-primary login-submit" data-i18n="btn_signin">Sign in</button>
+            <p class="field-hint text-center mt-16" data-i18n="hint_patient_session">You'll stay signed in for 7 days.</p>
+          </form>
+
+          <p class="auth-toggle text-center mt-16">
+            <button type="button" class="btn btn-secondary" id="patient-signup-toggle" data-i18n="btn_create_account">Create Account</button>
+          </p>
+
+          <form id="patient-signup-form" class="signup-form" novalidate hidden>
+            <div class="field">
+              <label for="patient-signup-name" data-i18n="label_patient_name">Patient Name</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <input id="patient-signup-name" type="text" data-role="signup-name" autocomplete="name" placeholder="Patient's full name" data-i18n-placeholder="placeholder_patient_name" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="patient-signup-email" data-i18n="label_email">Email</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <input id="patient-signup-email" type="email" autocomplete="email" placeholder="name@family.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="patient-signup-password" data-i18n="label_password">Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="patient-signup-password" type="password" data-role="signup-password" autocomplete="new-password" placeholder="Choose a password" data-i18n-placeholder="placeholder_choose_password" required minlength="6" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="patient-signup-confirm" data-i18n="label_confirm_password">Confirm Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="patient-signup-confirm" type="password" data-role="signup-confirm" autocomplete="new-password" placeholder="Re-enter your password" data-i18n-placeholder="placeholder_reenter_password" required minlength="6" />
+              </div>
+            </div>
+            <p class="form-message" role="status"></p>
+            <button type="submit" class="btn btn-primary login-submit" data-i18n="btn_create_account">Create Account</button>
+            <p class="field-hint text-center mt-16">
+              <button type="button" class="link-btn" id="patient-signin-toggle" data-i18n="link_already_have_account">Already have an account? Sign in</button>
+            </p>
+          </form>
+        </div>
+
+        <!-- Family panel -->
+        <div class="login-panel" id="family-panel" role="tabpanel">
+          <form id="family-form" novalidate>
+            <div class="field">
+              <label for="family-email" data-i18n="label_email">Email</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <input id="family-email" type="email" autocomplete="email" placeholder="name@family.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="family-password" data-i18n="label_password">Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="family-password" type="password" autocomplete="current-password" placeholder="Enter your password" data-i18n-placeholder="placeholder_password" required />
+                <button type="button" class="password-toggle" data-toggle-for="family-password" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="form-message" role="status"></p>
+            <button type="submit" class="btn btn-primary login-submit" data-i18n="btn_signin">Sign in</button>
+            <p class="field-hint text-center mt-16" data-i18n="hint_family_session">Family sessions stay signed in for 24 hours.</p>
+          </form>
+
+          <p class="auth-toggle text-center mt-16">
+            <button type="button" class="btn btn-secondary" id="family-signup-toggle" data-i18n="btn_create_account">Create Account</button>
+          </p>
+
+          <form id="family-signup-form" class="signup-form" novalidate hidden>
+            <div class="field">
+              <label for="family-signup-name" data-i18n="label_your_name">Your Name</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="2"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <input id="family-signup-name" type="text" data-role="signup-name" autocomplete="name" placeholder="Your full name" data-i18n-placeholder="placeholder_your_name" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="family-signup-email" data-i18n="label_email">Email</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <input id="family-signup-email" type="email" autocomplete="email" placeholder="name@family.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="family-signup-password" data-i18n="label_password">Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="family-signup-password" type="password" data-role="signup-password" autocomplete="new-password" placeholder="Choose a password" data-i18n-placeholder="placeholder_choose_password" required minlength="6" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="family-signup-confirm" data-i18n="label_confirm_password">Confirm Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <input id="family-signup-confirm" type="password" data-role="signup-confirm" autocomplete="new-password" placeholder="Re-enter your password" data-i18n-placeholder="placeholder_reenter_password" required minlength="6" />
+              </div>
+            </div>
+            <p class="form-message" role="status"></p>
+            <button type="submit" class="btn btn-primary login-submit" data-i18n="btn_create_account">Create Account</button>
+            <p class="field-hint text-center mt-16">
+              <button type="button" class="link-btn" id="family-signin-toggle" data-i18n="link_already_have_account">Already have an account? Sign in</button>
+            </p>
+          </form>
+        </div>
+
+        <p class="small-note text-center login-footnote" data-i18n="footnote_same_credentials">
+          Use the same email and password for both logins.
+        </p>
+      </div>
+
+      <p class="login-session-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span data-i18n="session_note">Your session duration depends on the role you choose.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Supabase JS client (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+
+  <!-- Purely cosmetic: password show/hide toggle. Does not touch login/session logic in js/auth.js -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".password-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = document.getElementById(btn.dataset.toggleFor);
+          if (!input) return;
+          const showing = input.type === "text";
+          input.type = showing ? "password" : "text";
+          btn.classList.toggle("is-visible", !showing);
+          btn.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
