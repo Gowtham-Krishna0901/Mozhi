@@ -1,0 +1,2013 @@
+/* =========================================================
+   MOZHI — shared stylesheet
+   Modern healthcare theme: blue + green + white, red reserved
+   strictly for emergency actions. Built for large touch
+   targets and elderly / motor-impaired users: big fonts,
+   high contrast, generous spacing, gentle motion.
+   ========================================================= */
+
+:root {
+  /* -- Color tokens --------------------------------------- */
+  --blue-700: #1d4ed8;
+  --blue-600: #2563eb;   /* primary brand blue */
+  --blue-500: #3b82f6;
+  --blue-100: #dbeafe;
+  --blue-50:  #eff6ff;
+  --white:    #ffffff;
+  --ink-900:  #0f172a;   /* main text */
+  --ink-600:  #475569;   /* secondary text */
+  --ink-300:  #cbd5e1;   /* borders */
+  --red-600:  #ef4444;   /* emergency ONLY */
+  --red-700:  #dc2626;
+  --red-50:   #fef2f2;
+  --green-600:#10b981;   /* secondary brand / success / confirmation */
+  --green-700:#059669;
+  --green-50: #ecfdf5;
+  --green-100:#d1fae5;
+  --amber-500:#f59e0b;   /* coming soon / warnings */
+
+  /* -- Type ------------------------------------------------ */
+  --font-base: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* -- Spacing & shape -------------------------------------- */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.07), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --shadow-raised: 0 12px 28px rgba(37, 99, 235, 0.22);
+  --shadow-raised-green: 0 12px 28px rgba(16, 185, 129, 0.24);
+
+  /* -- Motion ------------------------------------------------ */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------------------------------------------------------
+   Reset & base
+   --------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html {
+  /* Root size is intentionally large — everything below
+     scales off this for an elderly-friendly baseline. */
+  font-size: 18px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-base);
+  color: var(--ink-900);
+  background: linear-gradient(160deg, #dbeafe 0%, #e0f2fe 35%, #d1fae5 75%, #bbf7d0 100%);
+  background-attachment: fixed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+img { max-width: 100%; display: block; }
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a { color: var(--blue-600); }
+
+/* Visible focus ring everywhere — critical for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--blue-700);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   Layout shells
+   --------------------------------------------------------- */
+.app-shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.center-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ---------------------------------------------------------
+   Header / brand
+   --------------------------------------------------------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.brand-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, var(--blue-600), var(--green-600));
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-raised);
+}
+
+.brand-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blue-700);
+  letter-spacing: -0.02em;
+}
+
+.brand-tagline {
+  text-align: center;
+  color: var(--ink-600);
+  margin: 0 0 32px;
+  font-size: 1.05rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+}
+
+/* Back / icon buttons used in headers */
+.icon-btn {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  border: 2px solid var(--blue-100);
+  background: var(--white);
+  color: var(--blue-700);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: background 0.2s var(--ease), transform 0.15s var(--ease-bounce), box-shadow 0.2s var(--ease);
+}
+.icon-btn:hover { background: var(--blue-50); transform: translateY(-1px); box-shadow: var(--shadow-raised); }
+.icon-btn:active { transform: scale(0.94); }
+
+/* ---------------------------------------------------------
+   Cards
+   --------------------------------------------------------- */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: var(--ink-900);
+}
+
+/* ---------------------------------------------------------
+   Login page
+   --------------------------------------------------------- */
+.login-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--blue-50);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+
+.login-tab {
+  border: none;
+  background: transparent;
+  padding: 14px 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-600);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  min-height: 56px;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.login-tab.active {
+  background: var(--white);
+  color: var(--blue-700);
+  box-shadow: var(--shadow-card);
+}
+
+.login-panel { display: none; }
+.login-panel.active { display: block; animation: fade-in 0.3s var(--ease); }
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink-900);
+}
+
+.field input {
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--ink-300);
+  background: var(--white);
+  font-size: 1.05rem;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.field input:focus {
+  border-color: var(--blue-600);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+
+.field-hint {
+  font-size: 0.9rem;
+  color: var(--ink-600);
+  margin-top: 6px;
+}
+
+.form-message {
+  min-height: 24px;
+  font-size: 0.95rem;
+  color: var(--red-700);
+  margin: -4px 0 12px;
+}
+.form-message.success { color: var(--green-700); }
+
+/* ---------------------------------------------------------
+   Buttons
+   --------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 60px;
+  padding: 16px 24px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-bounce), box-shadow 0.25s var(--ease), background 0.2s var(--ease);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--blue-600);
+  color: var(--white);
+  box-shadow: var(--shadow-raised);
+}
+.btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--blue-700);
+  border-color: var(--blue-100);
+}
+.btn-secondary:hover { background: var(--blue-50); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink-600);
+  border-color: var(--ink-300);
+}
+.btn-outline:hover { background: var(--blue-50); border-color: var(--blue-500); color: var(--blue-700); }
+
+.btn-danger {
+  background: var(--red-50);
+  color: var(--red-700);
+  border-color: #fecaca;
+}
+.btn-danger:hover { background: #fee2e2; }
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* The big centerpiece "Communicate" button on patient home */
+.btn-hero {
+  width: 100%;
+  min-height: 180px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, var(--blue-600), var(--green-600));
+  color: var(--white);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: var(--shadow-raised);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.btn-hero:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(37,99,235,0.3); }
+.btn-hero:active { transform: scale(0.98); }
+.btn-hero .hero-icon { font-size: 3.2rem; line-height: 1; }
+.btn-hero .hero-label { font-size: 1.5rem; font-weight: 700; }
+
+.btn-hero.secondary {
+  min-height: 110px;
+  background: var(--white);
+  color: var(--blue-700);
+  border: 2px solid var(--blue-100);
+  box-shadow: var(--shadow-card);
+  margin-top: 20px;
+  position: relative;
+}
+.btn-hero.secondary:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
+.btn-hero.secondary .hero-icon { font-size: 2.2rem; }
+.btn-hero.secondary .hero-label { font-size: 1.2rem; }
+
+.badge-soon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--amber-500);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------------------------------------------------------
+   Category grid (communicate page)
+   --------------------------------------------------------- */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.category-tile {
+  background: var(--white);
+  border: 2px solid var(--blue-100);
+  border-radius: var(--radius-lg);
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.25s var(--ease), border-color 0.2s var(--ease);
+}
+.category-tile:hover {
+  border-color: var(--blue-500);
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-3px);
+}
+.category-tile:active { transform: scale(0.96); }
+.category-tile .tile-icon { font-size: 2.6rem; }
+.category-tile .tile-label { font-size: 1.15rem; font-weight: 700; color: var(--ink-900); }
+
+.category-tile.emergency {
+  background: var(--red-50);
+  border-color: #fecaca;
+}
+.category-tile.emergency:hover {
+  border-color: var(--red-600);
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.22);
+}
+.category-tile.emergency .tile-label { color: var(--red-700); }
+
+/* ---------------------------------------------------------
+   Phrase list (inside a category)
+   --------------------------------------------------------- */
+.phrase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.phrase-btn {
+  width: 100%;
+  min-height: 76px;
+  background: var(--white);
+  border: 2px solid var(--blue-100);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink-900);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.phrase-btn:hover { background: var(--blue-50); box-shadow: var(--shadow-raised); }
+.phrase-btn:active { transform: scale(0.98); background: var(--blue-100); }
+.phrase-btn .phrase-emoji { font-size: 1.8rem; flex-shrink: 0; }
+
+.phrase-btn.sending { opacity: 0.7; pointer-events: none; }
+
+/* ---------------------------------------------------------
+   Confirmation toast ("Message Sent")
+   --------------------------------------------------------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 20px);
+  background: var(--green-600);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 16px 28px;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease-bounce);
+  z-index: 50;
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.toast.error { background: var(--red-600); box-shadow: 0 12px 28px rgba(239,68,68,0.35); }
+
+/* ---------------------------------------------------------
+   Family dashboard: overview card
+   --------------------------------------------------------- */
+.overview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--blue-50);
+}
+.overview-row:last-child { border-bottom: none; }
+.overview-label {
+  color: var(--ink-600);
+  font-size: 0.98rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.overview-value {
+  font-weight: 700;
+  color: var(--ink-900);
+  text-align: right;
+}
+
+.alert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red-50);
+  color: var(--red-700);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-600);
+  padding: 24px 12px;
+  font-size: 0.98rem;
+}
+
+/* ---------------------------------------------------------
+   Category management (family)
+   --------------------------------------------------------- */
+.manage-category-select {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.manage-category-select::-webkit-scrollbar { height: 6px; }
+
+.chip {
+  flex-shrink: 0;
+  border: 2px solid var(--blue-100);
+  background: var(--white);
+  color: var(--ink-600);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  min-height: 48px;
+}
+.chip:hover { border-color: var(--blue-500); }
+.chip.active {
+  background: var(--blue-600);
+  color: var(--white);
+  border-color: var(--blue-600);
+  box-shadow: var(--shadow-raised);
+}
+
+.manage-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 2px solid var(--blue-50);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.manage-row:hover { box-shadow: var(--shadow-raised); transform: translateY(-1px); }
+.manage-row-text {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.manage-row-actions {
+  display: flex;
+  gap: 8px;
+}
+.manage-row-actions button {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid var(--ink-300);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s var(--ease), transform 0.15s var(--ease-bounce);
+}
+.manage-row-actions button:hover { background: var(--blue-50); transform: translateY(-1px); }
+.manage-row-actions .delete-btn:hover { background: var(--red-50); border-color: #fecaca; }
+
+.add-phrase-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.add-phrase-form input { flex: 1; }
+
+/* Inline edit input replaces text when editing a phrase */
+.manage-row input.edit-input {
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--blue-500);
+  font-size: 1.05rem;
+}
+
+/* ---------------------------------------------------------
+   Loading / spinner
+   --------------------------------------------------------- */
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--blue-100);
+  border-top-color: var(--blue-600);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+.loading-wrap { display: flex; justify-content: center; padding: 40px 0; }
+
+/* ---------------------------------------------------------
+   Coming soon overlay
+   --------------------------------------------------------- */
+.coming-soon-note {
+  text-align: center;
+  color: var(--ink-600);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+/* ---------------------------------------------------------
+   Animations
+   --------------------------------------------------------- */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pop-in {
+  0% { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.card, .category-tile, .btn-hero { animation: pop-in 0.4s var(--ease-bounce); }
+
+/* ---------------------------------------------------------
+   Utility
+   --------------------------------------------------------- */
+.text-center { text-align: center; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.stack-8 > * + * { margin-top: 8px; }
+.small-note { font-size: 0.88rem; color: var(--ink-600); }
+.logout-link {
+  background: none;
+  border: none;
+  color: var(--ink-600);
+  font-size: 0.95rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 10px;
+  transition: color 0.2s var(--ease);
+}
+.logout-link:hover { color: var(--red-700); }
+
+/* ---------------------------------------------------------
+   Login page redesign
+   Everything below is scoped to body.login-page (or is a
+   class only ever used on index.html), so it can't leak
+   into the dashboard / communicate / manage pages, which
+   still use the shared .card, .brand, .center-shell rules
+   above untouched.
+   --------------------------------------------------------- */
+.login-page {
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(160deg, #dbeafe 0%, #e0f2fe 40%, #d1fae5 80%, #bbf7d0 100%);
+}
+
+/* soft floating color blobs behind the card for depth */
+.login-bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.login-bg-blob.blob-a {
+  width: 380px;
+  height: 380px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, var(--blue-500), transparent 70%);
+  animation: blob-float 12s ease-in-out infinite;
+}
+.login-bg-blob.blob-b {
+  width: 420px;
+  height: 420px;
+  bottom: -140px;
+  right: -120px;
+  background: radial-gradient(circle, var(--green-600), transparent 70%);
+  animation: blob-float 14s ease-in-out infinite reverse;
+}
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -24px) scale(1.06); }
+}
+
+.login-page .center-shell { position: relative; z-index: 1; }
+
+.login-page .brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  font-size: 1.9rem;
+  animation: pop-in 0.5s var(--ease-bounce);
+}
+.login-page .brand-name { font-size: 2.1rem; }
+.login-page .brand-tagline {
+  font-weight: 500;
+  color: var(--ink-600);
+  margin-bottom: 28px;
+}
+
+/* -- Glassmorphism card ----------------------------------- */
+.login-glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), 0 4px 16px rgba(15, 23, 42, 0.06);
+  padding: 30px 26px;
+  animation: pop-in 0.45s var(--ease-bounce);
+}
+
+.login-section-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink-600);
+  margin: 0 0 12px;
+}
+
+/* -- Role select cards (still .login-tab so auth.js's
+      querySelectorAll(".login-tab") / data-tab logic and
+      the active-toggle click handler work unmodified) --- */
+.role-select {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 26px;
+}
+
+.login-tab.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 116px;
+  padding: 18px 12px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 2px solid var(--blue-100);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease-bounce);
+}
+.login-tab.role-card:hover { transform: translateY(-2px); border-color: var(--blue-500); }
+
+.login-tab.role-card.active {
+  background: var(--white);
+  border-color: var(--blue-600);
+  box-shadow: var(--shadow-raised);
+}
+
+.role-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+.role-icon-blue { background: var(--blue-50); color: var(--blue-600); }
+.role-icon-green { background: var(--green-50); color: var(--green-700); }
+
+.login-tab.role-card.active .role-icon-blue { background: var(--blue-600); color: var(--white); }
+.login-tab.role-card.active .role-icon-green { background: var(--green-600); color: var(--white); }
+
+.role-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+.role-subtitle {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--ink-600);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* -- Inputs with leading icon (+ trailing eye toggle) ----- */
+.login-page .field label {
+  font-size: 0.92rem;
+  color: var(--ink-600);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.input-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  color: var(--ink-600);
+  pointer-events: none;
+}
+
+.login-page .field input {
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 16px 12px 44px;
+  border-radius: 14px;
+  border: 2px solid var(--blue-100);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+}
+.login-page .field input:focus {
+  border-color: var(--blue-600);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+}
+.login-page #patient-password,
+.login-page #family-password {
+  padding-right: 46px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--ink-300);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.password-toggle:hover { background: var(--blue-50); color: var(--ink-600); }
+.password-toggle.is-visible { color: var(--blue-600); }
+
+/* -- Submit + footnotes ------------------------------------ */
+.login-submit {
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+  letter-spacing: 0.01em;
+}
+.login-submit:hover { background: linear-gradient(135deg, var(--blue-700), var(--blue-600)); }
+
+.login-footnote {
+  margin-top: 18px;
+  margin-bottom: 0;
+  color: var(--ink-600);
+}
+
+.login-session-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px auto 0;
+  padding: 10px 18px;
+  max-width: fit-content;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blue-700);
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 999px;
+}
+.login-session-note svg { flex-shrink: 0; }
+
+@media (max-width: 380px) {
+  .login-glass-card { padding: 24px 18px; }
+  .login-tab.role-card { min-height: 104px; padding: 14px 8px; }
+  .role-title { font-size: 0.92rem; }
+  .role-subtitle { font-size: 0.7rem; }
+}
+
+/* ---------------------------------------------------------
+   Responsive breakpoints
+   --------------------------------------------------------- */
+@media (min-width: 640px) {
+  html { font-size: 19px; }
+  .category-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 380px) {
+  html { font-size: 16.5px; }
+  .app-shell { padding: 18px 14px 40px; }
+  .category-grid { gap: 12px; }
+}
+
+/* ---------------------------------------------------------
+   Login page (redesign)
+   Centered glassmorphism card with role-selector cards.
+   Reuses .login-tabs / .login-tab / .login-panel so the
+   existing tab-switching logic in js/auth.js needs no changes.
+   --------------------------------------------------------- */
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-wrap {
+  width: 100%;
+  max-width: 440px;
+}
+
+.brand-login {
+  margin-bottom: 10px;
+}
+.brand-login .brand-mark {
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  font-size: 1.8rem;
+}
+
+.brand-name-login {
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--blue-700);
+  letter-spacing: -0.02em;
+  margin: 6px 0 2px;
+}
+
+.brand-tagline-login {
+  text-align: center;
+  color: var(--ink-600);
+  margin: 0 0 28px;
+  font-size: 1rem;
+}
+
+/* -- Glass card ------------------------------------------- */
+.login-card {
+  padding: 32px 28px 28px;
+  border-radius: 28px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 24px 60px rgba(37, 99, 235, 0.16),
+    0 6px 20px rgba(16, 185, 129, 0.08);
+}
+
+.login-card-label {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink-600);
+  margin: 0 0 12px;
+}
+
+/* -- Role selector (Patient / Family) ---------------------- */
+.role-select {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 26px;
+}
+
+.role-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 104px;
+  padding: 16px 8px 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--blue-100);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--ink-600);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease), transform 0.2s var(--ease-bounce);
+}
+
+.role-option:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+.role-option:active { transform: scale(0.97); }
+
+.role-option .role-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.role-option .role-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink-900);
+}
+
+.role-option .role-subtitle {
+  font-size: 0.74rem;
+  line-height: 1.3;
+  color: var(--ink-600);
+}
+
+.role-option.active {
+  border-color: var(--blue-600);
+  background: var(--blue-50);
+  box-shadow: var(--shadow-raised);
+}
+.role-option.active .role-icon {
+  background: var(--blue-600);
+  color: var(--white);
+}
+
+/* Family card picks up the secondary green brand color when selected */
+.role-option-family.active {
+  border-color: var(--green-600);
+  background: var(--green-50);
+  box-shadow: var(--shadow-raised-green);
+}
+.role-option-family.active .role-icon {
+  background: var(--green-600);
+  color: var(--white);
+}
+
+/* -- Icon-prefixed inputs ----------------------------------- */
+.input-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-icon-wrap .input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.05rem;
+  opacity: 0.75;
+  pointer-events: none;
+}
+.input-icon-wrap input {
+  padding-left: 46px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.login-footnote {
+  margin-top: 22px;
+  line-height: 1.55;
+  padding: 0 8px;
+}
+
+@media (max-width: 380px) {
+  .login-card { padding: 26px 20px 22px; }
+  .role-option { min-height: 96px; padding: 14px 6px 12px; }
+}
+
+/* ---------------------------------------------------------
+   Create Account (Sign Up)
+   Appended without touching any rule above — the sign-in
+   form, role cards, and inputs keep the exact styling they
+   already had.
+   --------------------------------------------------------- */
+.auth-toggle { margin: 8px 0 0; }
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--blue-700);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s var(--ease);
+}
+.link-btn:hover { color: var(--green-700); }
+
+.signup-form { animation: fade-in 0.3s var(--ease); }
+.signup-form[hidden] { display: none; }
+
+/* ---------------------------------------------------------
+   Patient Dashboard redesign
+   Scoped to .patient-home (only patient-dashboard.html uses
+   it) plus the .btn-hero rules it relies on. Functionality
+   (ids, onclick handlers) is untouched — this is visuals only.
+   --------------------------------------------------------- */
+.patient-home {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting-block {
+  text-align: center;
+  margin: 18px 0 0;
+}
+
+.greeting-wave {
+  display: inline-block;
+  font-size: 2.3rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: wave 2.6s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+.greeting-title {
+  margin: 0;
+  font-size: 1.65rem;
+}
+
+.greeting-subtitle {
+  margin: 8px 0 0;
+}
+
+.hero-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px 0 12px;
+}
+
+/* Communicate button: large circular blue-green gradient,
+   centered, with a soft breathing halo to draw the eye. */
+.btn-hero {
+  width: 250px;
+  height: 250px;
+  max-width: 66vw;
+  max-height: 66vw;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--blue-600), var(--green-600));
+  color: var(--white);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 20px 46px rgba(16, 185, 129, 0.3), 0 8px 22px rgba(37, 99, 235, 0.22);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  position: relative;
+}
+.btn-hero::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid var(--green-600);
+  opacity: 0.45;
+  animation: breathe 2.6s var(--ease) infinite;
+}
+.btn-hero:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 26px 56px rgba(16, 185, 129, 0.36), 0 10px 26px rgba(37, 99, 235, 0.26); }
+.btn-hero:active { transform: scale(0.97); }
+.btn-hero .hero-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+.btn-hero .hero-label {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Rehabilitation stays a full-width rectangular card, not
+   circular — override the base .btn-hero sizing above. */
+.btn-hero.secondary {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  min-height: 104px;
+  border-radius: var(--radius-lg);
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 18px 22px;
+  background: var(--white);
+  color: var(--ink-900);
+  border: 2px solid var(--blue-100);
+  box-shadow: var(--shadow-card);
+  margin: 28px auto 0;
+}
+.btn-hero.secondary::before { display: none; }
+.btn-hero.secondary:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
+.btn-hero.secondary .hero-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  font-size: 1.7rem;
+}
+.btn-hero.secondary .hero-label {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--ink-900);
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(10deg); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50% { transform: scale(1.07); opacity: 0.1; }
+}
+
+@media (max-width: 380px) {
+  .btn-hero { width: 210px; height: 210px; }
+  .greeting-title { font-size: 1.4rem; }
+}
+
+/* ---------------------------------------------------------
+   Communication Categories — icon-card redesign
+   Overrides the earlier .manage-category-select / .chip
+   rules further up the file (later rules win). The JS still
+   only toggles the "chip"/"active" classes and data-cat
+   attribute, so none of category-management.js's logic
+   needed to change beyond the inner markup template.
+   --------------------------------------------------------- */
+:root {
+  --cyan-600: #06aed4;
+  --cyan-50:  #e5f9fc;
+  --purple-600: #7c5cff;
+  --purple-50:  #f0ecff;
+  --indigo-600: #4f46e5;
+  --indigo-50:  #eef0ff;
+  --amber-50: #fff7e6;
+}
+
+.manage-category-select {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  overflow: visible;
+  padding: 2px 0 6px;
+  margin-bottom: 26px;
+}
+
+.chip {
+  flex-shrink: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 96px;
+  border: 2px solid var(--blue-100);
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 14px 6px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.25s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.chip:hover { transform: translateY(-3px); box-shadow: var(--shadow-raised); border-color: var(--blue-500); }
+.chip:active { transform: scale(0.96); }
+
+.chip-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: var(--blue-50);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.chip-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink-900);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.chip.active { background: var(--blue-50); border-color: var(--blue-600); box-shadow: var(--shadow-raised); }
+.chip.active .chip-icon { transform: scale(1.08); }
+
+/* Color each category's icon circle — order follows
+   CATEGORIES in supabase-client.js: food, water, washroom,
+   medicine, pain, sleep, emergency. */
+.chip:nth-child(1) .chip-icon { background: var(--blue-50); }
+.chip:nth-child(1).active { border-color: var(--blue-600); }
+.chip:nth-child(1).active .chip-icon { background: var(--blue-600); }
+
+.chip:nth-child(2) .chip-icon { background: var(--cyan-50); }
+.chip:nth-child(2).active { border-color: var(--cyan-600); }
+.chip:nth-child(2).active .chip-icon { background: var(--cyan-600); }
+
+.chip:nth-child(3) .chip-icon { background: var(--green-50); }
+.chip:nth-child(3).active { border-color: var(--green-600); }
+.chip:nth-child(3).active .chip-icon { background: var(--green-600); }
+
+.chip:nth-child(4) .chip-icon { background: var(--purple-50); }
+.chip:nth-child(4).active { border-color: var(--purple-600); }
+.chip:nth-child(4).active .chip-icon { background: var(--purple-600); }
+
+.chip:nth-child(5) .chip-icon { background: var(--amber-50); }
+.chip:nth-child(5).active { border-color: var(--amber-500); }
+.chip:nth-child(5).active .chip-icon { background: var(--amber-500); }
+
+.chip:nth-child(6) .chip-icon { background: var(--indigo-50); }
+.chip:nth-child(6).active { border-color: var(--indigo-600); }
+.chip:nth-child(6).active .chip-icon { background: var(--indigo-600); }
+
+/* Emergency always carries the red theme, active or not. */
+.chip.emergency {
+  background: var(--red-50);
+  border-color: #fecaca;
+}
+.chip.emergency .chip-icon { background: var(--red-600); }
+.chip.emergency .chip-label { color: var(--red-700); }
+.chip.emergency:hover { border-color: var(--red-600); box-shadow: 0 14px 30px rgba(239, 68, 68, 0.22); }
+.chip.emergency.active {
+  background: var(--red-50);
+  border-color: var(--red-600);
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.26);
+}
+.chip.emergency.active .chip-icon {
+  background: var(--red-600);
+  animation: pulse-ring 1.8s var(--ease) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+.chip { animation: pop-in 0.35s var(--ease-bounce); }
+.chip:nth-child(1) { animation-delay: 0.02s; }
+.chip:nth-child(2) { animation-delay: 0.06s; }
+.chip:nth-child(3) { animation-delay: 0.1s; }
+.chip:nth-child(4) { animation-delay: 0.14s; }
+.chip:nth-child(5) { animation-delay: 0.18s; }
+.chip:nth-child(6) { animation-delay: 0.22s; }
+.chip:nth-child(7) { animation-delay: 0.26s; }
+
+/* Responsive: fewer columns on narrower screens so cards
+   never feel cramped. */
+@media (max-width: 480px) {
+  .manage-category-select { grid-template-columns: repeat(3, 1fr); }
+  .chip { min-height: 88px; padding: 12px 4px; }
+  .chip-icon { width: 38px; height: 38px; font-size: 1.15rem; }
+  .chip-label { font-size: 0.78rem; }
+}
+
+@media (min-width: 640px) {
+  .manage-category-select { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+}
+
+/* ---------------------------------------------------------
+   Family Dashboard redesign
+   Reuses the .greeting-block / .greeting-wave / .greeting-title
+   classes added for the Patient Dashboard (they were never
+   scoped to .patient-home) for visual consistency. Only new
+   selectors are added below — ids and click wiring in
+   js/family.js are untouched.
+   --------------------------------------------------------- */
+.overview-card { position: relative; overflow: hidden; }
+.overview-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--blue-600), var(--green-600));
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-title-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.overview-row { padding: 16px 0; }
+.overview-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.overview-icon-blue { background: var(--blue-50); }
+.overview-icon-purple { background: var(--purple-50); }
+.overview-icon-red { background: var(--red-50); }
+
+/* Large, attractive Communication Categories button */
+.categories-hero-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 22px;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  background: linear-gradient(135deg, var(--green-600), var(--blue-600));
+  color: var(--white);
+  box-shadow: var(--shadow-raised-green);
+  transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s var(--ease);
+}
+.categories-hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 44px rgba(16, 185, 129, 0.32), 0 8px 22px rgba(37, 99, 235, 0.22);
+}
+.categories-hero-btn:active { transform: scale(0.98); }
+
+.categories-hero-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.categories-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.categories-hero-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.categories-hero-subtitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.92;
+}
+.categories-hero-arrow {
+  font-size: 1.5rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease);
+}
+.categories-hero-btn:hover .categories-hero-arrow { transform: translateX(4px); }
+
+@media (max-width: 380px) {
+  .categories-hero-btn { padding: 18px 16px; gap: 12px; }
+  .categories-hero-icon { width: 50px; height: 50px; font-size: 1.5rem; }
+  .categories-hero-title { font-size: 1.02rem; }
+  .categories-hero-subtitle { font-size: 0.78rem; }
+}
+
+/* ---------------------------------------------------------
+   Category Management — modern cards & rounded controls
+   Overrides earlier .add-phrase-form / .manage-row / .manage-
+   row-actions rules (later rules win). Every data-action,
+   data-role, and id used by js/category-management.js is
+   untouched — only markup classes were added there for
+   styling hooks.
+   --------------------------------------------------------- */
+.add-phrase-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.phrase-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.phrase-input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.phrase-input-wrap input {
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px 14px 46px;
+  border-radius: 999px;
+  border: 2px solid var(--blue-100);
+  background: var(--white);
+  font-size: 1.02rem;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.phrase-input-wrap input:focus {
+  border-color: var(--blue-600);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.add-phrase-btn {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--blue-600), var(--green-600));
+  color: var(--white);
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-raised);
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.25s var(--ease);
+}
+.add-phrase-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 16px 34px rgba(16, 185, 129, 0.3); }
+.add-phrase-btn:active { transform: scale(0.94); }
+.add-phrase-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+/* Phrase cards */
+.manage-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 2px solid var(--blue-50);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.25s var(--ease), transform 0.2s var(--ease-bounce), border-color 0.2s var(--ease);
+}
+.manage-row:hover {
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-2px);
+  border-color: var(--blue-100);
+}
+
+.manage-row-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--blue-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.manage-row-text {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.manage-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.row-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--blue-100);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease-bounce), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.row-action-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+.row-action-btn:active { transform: scale(0.92); }
+
+.row-action-btn.edit-btn:hover { background: var(--blue-50); border-color: var(--blue-500); }
+.row-action-btn.delete-btn:hover { background: var(--red-50); border-color: #fecaca; }
+.row-action-btn.save-btn { border-color: var(--green-100); }
+.row-action-btn.save-btn:hover { background: var(--green-50); border-color: var(--green-600); }
+.row-action-btn.cancel-btn:hover { background: var(--red-50); border-color: #fecaca; }
+
+.manage-row input.edit-input {
+  flex: 1;
+  min-height: 46px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--blue-500);
+  font-size: 1.05rem;
+  background: var(--blue-50);
+}
+
+.manage-row { animation: pop-in 0.3s var(--ease-bounce); }
+
+@media (max-width: 380px) {
+  .manage-row { padding: 13px 14px; gap: 10px; }
+  .manage-row-icon { width: 36px; height: 36px; font-size: 1.05rem; }
+  .row-action-btn { width: 40px; height: 40px; }
+  .add-phrase-btn { width: 50px; height: 50px; font-size: 1.4rem; }
+  .phrase-input-wrap input { min-height: 50px; }
+}
+
+/* ---------------------------------------------------------
+   Icons — consistent sizing & coloring pass
+   Every emoji in the app has been replaced with an inline
+   SVG from the shared icon library in js/supabase-client.js
+   (or hand-matched SVG markup in static HTML). This section
+   makes sure every icon-bearing element renders its SVG at
+   a consistent size and in the right color via currentColor
+   — it only ADDS `color` declarations and a couple of new
+   selectors; no background/layout rule above is overridden.
+   --------------------------------------------------------- */
+
+/* Universal: any icon-wrapping span centers its SVG with no
+   extra inline-baseline gap. */
+.tile-icon svg, .chip-icon svg, .overview-icon svg, .manage-row-icon svg,
+.card-title-icon svg, .categories-hero-icon svg, .categories-hero-arrow svg,
+.row-action-btn svg, .phrase-input-icon svg, .add-phrase-btn svg,
+.greeting-wave svg, .page-title-icon svg, .icon-btn svg {
+  display: block;
+}
+
+/* Category tile icons (patient Communicate grid) — give them
+   the same colored-circle treatment as the family-side chips
+   so both views share one visual language. */
+.category-tile .tile-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.category-tile:nth-child(1) .tile-icon { background: var(--blue-50); color: var(--blue-700); }
+.category-tile:nth-child(2) .tile-icon { background: var(--cyan-50); color: var(--cyan-600); }
+.category-tile:nth-child(3) .tile-icon { background: var(--green-50); color: var(--green-700); }
+.category-tile:nth-child(4) .tile-icon { background: var(--purple-50); color: var(--purple-600); }
+.category-tile:nth-child(5) .tile-icon { background: var(--amber-50); color: #b45309; }
+.category-tile:nth-child(6) .tile-icon { background: var(--indigo-50); color: var(--indigo-600); }
+.category-tile.emergency .tile-icon { background: var(--red-600); color: var(--white); }
+
+/* Family-side category chips — color the icon itself, not
+   just the circle behind it (background rules already exist
+   further up the file). */
+.chip-icon { color: var(--ink-600); }
+.chip:nth-child(1) .chip-icon { color: var(--blue-700); }
+.chip:nth-child(1).active .chip-icon { color: var(--white); }
+.chip:nth-child(2) .chip-icon { color: var(--cyan-600); }
+.chip:nth-child(2).active .chip-icon { color: var(--white); }
+.chip:nth-child(3) .chip-icon { color: var(--green-700); }
+.chip:nth-child(3).active .chip-icon { color: var(--white); }
+.chip:nth-child(4) .chip-icon { color: var(--purple-600); }
+.chip:nth-child(4).active .chip-icon { color: var(--white); }
+.chip:nth-child(5) .chip-icon { color: #b45309; }
+.chip:nth-child(5).active .chip-icon { color: var(--white); }
+.chip:nth-child(6) .chip-icon { color: var(--indigo-600); }
+.chip:nth-child(6).active .chip-icon { color: var(--white); }
+.chip.emergency .chip-icon { color: var(--white); }
+
+/* Family Dashboard icons */
+.card-title-icon { color: var(--blue-700); }
+.overview-icon-blue { color: var(--blue-700); }
+.overview-icon-purple { color: var(--purple-600); }
+.overview-icon-red { color: var(--red-600); }
+.greeting-wave { color: var(--blue-600); }
+
+/* Category management icons */
+.phrase-input-icon { color: var(--ink-600); }
+.manage-row-icon { color: var(--blue-700); }
+.row-action-btn { color: var(--ink-600); }
+.row-action-btn.edit-btn:hover { color: var(--blue-700); }
+.row-action-btn.delete-btn:hover, .row-action-btn.cancel-btn:hover { color: var(--red-600); }
+.row-action-btn.save-btn { color: var(--green-700); }
+
+/* Category detail page (category.html) title icon */
+.page-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+@media (max-width: 380px) {
+  .category-tile .tile-icon { width: 44px; height: 44px; }
+}
+
+/* ===========================================================
+   FINAL POLISH PASS
+   Pure CSS — no JS or Supabase logic touched anywhere in this
+   section. Adds smooth cross-page transitions, refines hover/
+   focus/press feedback, tightens spacing consistency, and
+   extends responsiveness for small phones, tablets, and
+   landscape/short viewports. Every rule below is additive or
+   scoped tightly enough not to fight the rules above it.
+   =========================================================== */
+
+/* -----------------------------------------------------------
+   Smooth page-to-page transitions (native browser API, no JS
+   required). Supporting browsers get a gentle cross-fade when
+   navigating between pages; unsupported browsers simply ignore
+   this and navigate as normal — fully progressive enhancement.
+   ----------------------------------------------------------- */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -----------------------------------------------------------
+   Smooth scrolling + tap responsiveness
+   ----------------------------------------------------------- */
+html { scroll-behavior: smooth; }
+
+button, a, input, .chip, .phrase-btn, .category-tile, .manage-row {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* -----------------------------------------------------------
+   Whole-page entrance — a soft fade+rise on the main content
+   wrapper so every page feels like it "arrives" rather than
+   popping in abruptly. Runs alongside (not instead of) the
+   individual card/tile pop-ins already defined above.
+   ----------------------------------------------------------- */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.app-shell, .center-shell {
+  animation: page-enter 0.45s var(--ease) both;
+}
+
+/* -----------------------------------------------------------
+   Fluid, consistent spacing
+   Padding now scales smoothly with viewport width instead of
+   jumping at fixed breakpoints, so spacing feels the same
+   proportionally on a small phone, a large phone, and a
+   tablet.
+   ----------------------------------------------------------- */
+.app-shell {
+  padding-left: clamp(16px, 5vw, 24px);
+  padding-right: clamp(16px, 5vw, 24px);
+  padding-top: clamp(18px, 4vw, 26px);
+}
+.center-shell { padding: clamp(16px, 5vw, 24px); }
+.card { padding: clamp(20px, 5vw, 28px); }
+
+/* -----------------------------------------------------------
+   Hover / press polish for controls that didn't already have
+   dedicated states — purely visual refinements.
+   ----------------------------------------------------------- */
+.logout-link {
+  border-radius: 999px;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.logout-link:hover { background: rgba(37, 99, 235, 0.08); color: var(--blue-700); }
+.logout-link:active { transform: scale(0.96); }
+
+a { transition: color 0.2s var(--ease); }
+
+.icon-btn { transition: background 0.2s var(--ease), transform 0.15s var(--ease-bounce), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease); }
+.icon-btn:active { transform: scale(0.92); }
+
+/* Every primary/secondary button gets a touch of lift on
+   hover and a satisfying press-down on tap, if it doesn't
+   already define its own transform states. */
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+
+/* Softer, springier focus ring that doesn't feel abrupt */
+button:focus-visible, a:focus-visible, input:focus-visible {
+  transition: outline-offset 0.15s var(--ease);
+}
+
+/* -----------------------------------------------------------
+   Toast: small entrance polish (scale + rise instead of just
+   opacity) for a slightly springier confirmation.
+   ----------------------------------------------------------- */
+.toast {
+  transform: translate(-50%, 16px) scale(0.96);
+}
+.toast.show {
+  transform: translate(-50%, 0) scale(1);
+  transition: opacity 0.3s var(--ease-bounce), transform 0.3s var(--ease-bounce);
+}
+
+/* -----------------------------------------------------------
+   Responsiveness — small phones (very narrow viewports)
+   ----------------------------------------------------------- */
+@media (max-width: 340px) {
+  html { font-size: 15.5px; }
+  .app-shell { padding-bottom: 36px; }
+  .category-grid { gap: 8px; }
+  .manage-category-select { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+}
+
+/* -----------------------------------------------------------
+   Responsiveness — short / landscape viewports, where a tall
+   circular hero button can push content below the fold.
+   ----------------------------------------------------------- */
+@media (max-height: 680px) {
+  .btn-hero:not(.secondary) {
+    width: 190px;
+    height: 190px;
+  }
+  .hero-stage { padding: 10px 0; }
+  .greeting-block { margin-top: 10px; }
+}
+
+/* -----------------------------------------------------------
+   Responsiveness — tablets and wider (comfortable reading
+   width, slightly roomier grids)
+   ----------------------------------------------------------- */
+@media (min-width: 768px) {
+  .app-shell { padding-top: 32px; }
+  .category-grid { gap: 18px; }
+  .manage-category-select { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .card { padding: 32px; }
+}
+
+@media (min-width: 1024px) {
+  .app-shell { max-width: 760px; }
+}
+
+/* =========================================================
+   DARK MODE
+   Toggled by js/darkmode.js, which adds/removes the
+   "mozhi-dark" class on <html>. Because almost every
+   component in this file is built on the CSS variables
+   below (var(--white), var(--ink-900), etc.), overriding
+   them here is enough to re-theme the whole app — the
+   handful of rules below that use hardcoded rgba(255,255,255,…)
+   glass effects (which don't respond to variables) get their
+   own explicit dark overrides underneath.
+   ========================================================= */
+html.mozhi-dark {
+  --blue-700: #60a5fa;
+  --blue-600: #3b82f6;
+  --blue-500: #60a5fa;
+  --blue-100: #1e3a5f;
+  --blue-50:  #16233b;
+
+  --white:    #1e293b;   /* card / surface background in dark mode */
+  --ink-900:  #f1f5f9;   /* main text in dark mode */
+  --ink-600:  #cbd5e1;   /* secondary text in dark mode */
+  --ink-300:  #334155;   /* borders in dark mode */
+
+  --red-600:  #f87171;
+  --red-700:  #ef4444;
+  --red-50:   #2a1416;
+
+  --green-600:#34d399;
+  --green-700:#10b981;
+  --green-50: #10241c;
+  --green-100:#143a2c;
+
+  --amber-500:#fbbf24;
+  --amber-50: #2a2210;
+
+  --cyan-600: #22d3ee;
+  --cyan-50:  #0f2630;
+  --purple-600: #a78bfa;
+  --purple-50:  #221b3d;
+  --indigo-600: #818cf8;
+  --indigo-50:  #1c2040;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-raised: 0 12px 28px rgba(59, 130, 246, 0.35);
+  --shadow-raised-green: 0 12px 28px rgba(16, 185, 129, 0.32);
+}
+
+/* Page background gradient (both the default body rule and
+   the .login-page override use hardcoded hex stops, so they
+   need explicit dark versions rather than picking up a
+   variable). */
+html.mozhi-dark body {
+  background: linear-gradient(160deg, #0b1220 0%, #0f172a 40%, #0a1a14 80%, #08150f 100%);
+}
+html.mozhi-dark .login-page {
+  background: linear-gradient(160deg, #0b1220 0%, #0f172a 40%, #0a1a14 80%, #08150f 100%);
+}
+
+/* Glassmorphism surfaces on the login page — these use
+   hardcoded rgba(255,255,255,…) for the frosted-glass look,
+   so they get dark equivalents here instead of responding to
+   a variable. */
+html.mozhi-dark .login-glass-card {
+  background: rgba(30, 41, 59, 0.72);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+html.mozhi-dark .login-tab.role-card {
+  background: rgba(30, 41, 59, 0.65);
+}
+html.mozhi-dark .role-option {
+  background: rgba(30, 41, 59, 0.75);
+}
+html.mozhi-dark .login-page .field input {
+  background: rgba(30, 41, 59, 0.8);
+}
+html.mozhi-dark .glass-card {
+  background: rgba(30, 41, 59, 0.62);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+html.mozhi-dark .input-icon-wrap input {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+/* Smooth the color swap instead of it snapping instantly. */
+body, .card, .login-glass-card, .glass-card, .login-tab.role-card, .role-option,
+.field input, .phrase-btn, .category-tile, .chip, .manage-row {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
