@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", async () => {
  */
 async function renderGreeting(user) {
   const hour = new Date().getHours();
-  let greeting = "Good Evening";
-  if (hour < 12) greeting = "Good Morning";
-  else if (hour < 17) greeting = "Good Afternoon";
+  let greeting = "Good Evening ";
+  if (hour < 12) greeting = "Good Morning ";
+  else if (hour < 17) greeting = "Good Afternoon ";
 
   const greetingEl = document.getElementById("greeting-text");
   if (greetingEl) greetingEl.textContent = greeting;
