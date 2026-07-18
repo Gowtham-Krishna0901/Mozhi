@@ -1922,3 +1922,92 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 @media (min-width: 1024px) {
   .app-shell { max-width: 760px; }
 }
+
+/* =========================================================
+   DARK MODE
+   Toggled by js/darkmode.js, which adds/removes the
+   "mozhi-dark" class on <html>. Because almost every
+   component in this file is built on the CSS variables
+   below (var(--white), var(--ink-900), etc.), overriding
+   them here is enough to re-theme the whole app — the
+   handful of rules below that use hardcoded rgba(255,255,255,…)
+   glass effects (which don't respond to variables) get their
+   own explicit dark overrides underneath.
+   ========================================================= */
+html.mozhi-dark {
+  --blue-700: #60a5fa;
+  --blue-600: #3b82f6;
+  --blue-500: #60a5fa;
+  --blue-100: #1e3a5f;
+  --blue-50:  #16233b;
+
+  --white:    #1e293b;   /* card / surface background in dark mode */
+  --ink-900:  #f1f5f9;   /* main text in dark mode */
+  --ink-600:  #cbd5e1;   /* secondary text in dark mode */
+  --ink-300:  #334155;   /* borders in dark mode */
+
+  --red-600:  #f87171;
+  --red-700:  #ef4444;
+  --red-50:   #2a1416;
+
+  --green-600:#34d399;
+  --green-700:#10b981;
+  --green-50: #10241c;
+  --green-100:#143a2c;
+
+  --amber-500:#fbbf24;
+  --amber-50: #2a2210;
+
+  --cyan-600: #22d3ee;
+  --cyan-50:  #0f2630;
+  --purple-600: #a78bfa;
+  --purple-50:  #221b3d;
+  --indigo-600: #818cf8;
+  --indigo-50:  #1c2040;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-raised: 0 12px 28px rgba(59, 130, 246, 0.35);
+  --shadow-raised-green: 0 12px 28px rgba(16, 185, 129, 0.32);
+}
+
+/* Page background gradient (both the default body rule and
+   the .login-page override use hardcoded hex stops, so they
+   need explicit dark versions rather than picking up a
+   variable). */
+html.mozhi-dark body {
+  background: linear-gradient(160deg, #0b1220 0%, #0f172a 40%, #0a1a14 80%, #08150f 100%);
+}
+html.mozhi-dark .login-page {
+  background: linear-gradient(160deg, #0b1220 0%, #0f172a 40%, #0a1a14 80%, #08150f 100%);
+}
+
+/* Glassmorphism surfaces on the login page — these use
+   hardcoded rgba(255,255,255,…) for the frosted-glass look,
+   so they get dark equivalents here instead of responding to
+   a variable. */
+html.mozhi-dark .login-glass-card {
+  background: rgba(30, 41, 59, 0.72);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+html.mozhi-dark .login-tab.role-card {
+  background: rgba(30, 41, 59, 0.65);
+}
+html.mozhi-dark .role-option {
+  background: rgba(30, 41, 59, 0.75);
+}
+html.mozhi-dark .login-page .field input {
+  background: rgba(30, 41, 59, 0.8);
+}
+html.mozhi-dark .glass-card {
+  background: rgba(30, 41, 59, 0.62);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+html.mozhi-dark .input-icon-wrap input {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+/* Smooth the color swap instead of it snapping instantly. */
+body, .card, .login-glass-card, .glass-card, .login-tab.role-card, .role-option,
+.field input, .phrase-btn, .category-tile, .chip, .manage-row {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
